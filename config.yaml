@@ -1,0 +1,45 @@
+seed: 42
+output_dir: artifacts
+
+model:
+  name: xlm-roberta-base
+  max_length: 160
+  num_train_epochs: 3
+  learning_rate: 0.00002
+  train_batch_size: 16
+  eval_batch_size: 32
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  gradient_accumulation_steps: 1
+  fp16: false
+
+split:
+  validation_size: 0.1
+  test_size: 0.1
+
+datasets:
+  - name: english
+    source: huggingface
+    dataset_name: stanfordnlp/imdb
+    dataset_config: default
+    text_column: text
+    label_column: label
+    language: english
+    split: train
+
+  - name: urdu
+    source: huggingface
+    dataset_name: urduhack/urdu_sentiment_corpus
+    dataset_config: default
+    text_column: text
+    label_column: label
+    language: urdu
+    split: train
+
+# For Roman Urdu, add a third dataset entry, for example:
+# - name: roman_urdu
+#   source: csv
+#   path: data/roman_urdu.csv
+#   text_column: text
+#   label_column: label
+#   language: roman_urdu
